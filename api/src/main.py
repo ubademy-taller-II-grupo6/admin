@@ -37,7 +37,7 @@ def get_admin_by_email (email:str, db=Depends(db)):
     else:
         raise HTTPException(404, crud.error_message(f'el administrador con email: {email} no existe'))
 
-@app.get('/admins/all/')
+@app.get('/admins')
 def get_admins (db=Depends(db)):
     admins = crud.get_admins(db)
     if admins:
