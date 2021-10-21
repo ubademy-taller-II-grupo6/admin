@@ -20,30 +20,30 @@ def db():
         yield db
     finally:
         db.close()
-            
-@app.get('/admins/{email}')
-def get_admin_by_email (email:str, db=Depends(db)):
-    admin = crud.get_admin_by_email(db,email)
-    if admin:
-        return admin
-    else:
-        raise HTTPException(404, crud.error_message(f'el administrador con email: {email} no existe'))
 
 @app.get('/admins/{id}')
 def get_admin_by_id (id:int, db=Depends(db)):
-    admin = crud.get_admin_by_id(db,id)
+    admin = crud.get_admin_by_id(db, id)
+    if admin:
+        return admin
+    else:
+        raise HTTPException(404, crud.error_message(f'el administrador con id: {id} no existe'))
+                    
+@app.get('/admins/email/{email}')
+def get_admin_by_email (email:str, db=Depends(db)):
+    admin = crud.get_admin_by_email(db, email)
     if admin:
         return admin
     else:
         raise HTTPException(404, crud.error_message(f'el administrador con email: {email} no existe'))
 
-@app.get('/admins/')
-def get_admins(db=Depends(db)):
+@app.get('/admins/all/')
+def get_admins (db=Depends(db)):
     admins = crud.get_admins(db)
     if admins:
         return admins
     else:
-        raise HTTPException(404, crud.error_message('no existen administradores'))    
+        raise HTTPException(404, crud.error_message(f'No existen administradores'))
 
 @app.post('/admins/')
 def create_admin(admin: Admin, db=Depends(db)):
