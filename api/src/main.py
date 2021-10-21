@@ -27,7 +27,7 @@ def get_admin_by_id (id:int, db=Depends(db)):
     if admin:
         return admin
     else:
-        raise HTTPException(404, crud.error_message(f'el administrador con id: {id} no existe'))
+        raise HTTPException(404, crud.error_message(f'No existe el administrador con id: {id}'))
                     
 @app.get('/admins/email/{email}')
 def get_admin_by_email (email:str, db=Depends(db)):
@@ -35,7 +35,7 @@ def get_admin_by_email (email:str, db=Depends(db)):
     if admin:
         return admin
     else:
-        raise HTTPException(404, crud.error_message(f'el administrador con email: {email} no existe'))
+        raise HTTPException(404, crud.error_message(f'No existe el administrador con email: {email}'))
 
 @app.get('/admins')
 def get_admins (db=Depends(db)):
@@ -56,7 +56,7 @@ def create_admin(admin: Admin, db=Depends(db)):
 def update_admin(id: int , admin: Admin, db=Depends(db)):
     admin_exist = crud.get_admin_by_id(db, id)
     if admin_exist is None:
-        raise HTTPException(404, detail= crud.error_message(f'el administrador con id: {id} no existe'))
+        raise HTTPException(404, detail= crud.error_message(f'No existe el administrador con id: {id}'))
     return crud.update_admin(db, id, admin)
 
 if __name__ == '__main__':
